@@ -1,0 +1,59 @@
+﻿@page "/counter"
+@using DitConMeMayWASM.Models
+@using Newtonsoft.Json
+@using System.Net.Http.Headers
+@inject HttpClient Http
+
+
+<h1>Counter: @newItemName</h1>
+<h1>Counter: @returnValues</h1>
+<form>
+	<div class="form-header">
+		<h3>Create New Student</h3>
+
+	</div>
+	<div class="form-group">
+		<label>Tên</label>
+		<input type="text" @bind-value=@us.FullName class="form-control">
+
+	</div>
+
+	<div class="form-group">
+		<label>Lớp</label>
+		<input @bind-value=@us.Class class="form-control">
+
+	</div>
+
+	<button type="button" @onclick="()=>addnew(us)">thêm</button>
+</form>
+
+
+@code {
+
+	private int newItemName;
+	private List<Users> users;
+	private Users us;
+	private string returnValues;
+	public Counter()
+	{
+		us = new Users();
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		var res = await Http.GetAsync("https://localhost:44344/WeatherForecast/mongo");
+		string jsonText = await res.Content.ReadAsStringAsync();
+		users = JsonConvert.DeserializeObject<List<Users>>(jsonText);
+		newItemName = users.Count();
+	}
+	private async void addnew(Users us)
+	{
+
+		var myContent = JsonConvert.SerializeObject(us);
+		var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+		var byteContent = new ByteArrayContent(buffer);
+		byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+		var jsondata = await Http.PostAsync("https://localhost:44344/WeatherForecast/mongoadd", byteContent);
+		returnValues = await jsondata.Content.ReadAsStringAsync();
+	}
+
+}
