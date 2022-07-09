@@ -1,6 +1,5 @@
 ﻿using ApiUser.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +12,9 @@ namespace ApiUser.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private List<Users> lst;
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private IMongoCollection<Users> _users;
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
         [HttpGet]
+        [Route("accc")]
         public async Task<IEnumerable<Users>> GetAllCustomersAsync()
         {
             //for testing purpose

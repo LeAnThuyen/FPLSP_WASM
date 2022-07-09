@@ -15,6 +15,7 @@ namespace ApiUser.Datasbase
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ApplicationUserConfig());
+            base.OnModelCreating(builder);
         }
 
     }
