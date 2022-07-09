@@ -43,6 +43,7 @@ namespace ApiUser
 
                 }
                 ));
+            services.Configure<AppSettings>(Configuration);
             services.AddControllersWithViews();
             services.AddMvc();
             services.AddRazorPages();

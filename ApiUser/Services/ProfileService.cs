@@ -74,8 +74,8 @@ namespace ApiUser.Services
                 new Claim(JwtClaimTypes.Name, user.UserName),
             };
 
-            if (!string.IsNullOrWhiteSpace(user.FistName))
-                claims.Add(new Claim(ClaimTypes.GivenName, user.FistName));
+            if (!string.IsNullOrWhiteSpace(user.FirstName))
+                claims.Add(new Claim(ClaimTypes.GivenName, user.FirstName));
 
 
             if (!string.IsNullOrWhiteSpace(user.LastName))
